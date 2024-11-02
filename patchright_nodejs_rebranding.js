@@ -94,6 +94,11 @@ function renameImportsAndExportsInDirectory(directoryPath) {
 }
 
 
+// Write the Projects README to the README which is used in the release
+fs.readFile("../README.md", "utf8", (err, data) => {
+    console.log(data);
+    fs.writeFile("README.md", data, "utf8", (err) => {});
+});
 
 // Renaming the folders and using context managers to ensure they finished
 fs.rename("packages/playwright-core", "packages/patchright-core", (err) => {
