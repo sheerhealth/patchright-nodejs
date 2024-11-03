@@ -99,15 +99,15 @@ jobs:
       - name: Publish Patchright-Core Package
         if: steps.version_check.outputs.proceed == 'true'
         run: |
-          cd playwright/packages/
-          npm publish --access=public patchright-core --provenance
+          cd playwright/packages/patchright-core/
+          npm publish --access=public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish Patchright Package
         if: steps.version_check.outputs.proceed == 'true'
         run: |
-          cd playwright/packages/
-          npm publish --access=public patchright --provenance
+          cd playwright/packages/patchright/
+          npm publish --access=public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
