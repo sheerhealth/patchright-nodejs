@@ -94,15 +94,15 @@ function renameImportsAndExportsInDirectory(directoryPath) {
 }
 
 
-// Write the Projects README to the README which is used in the release
-fs.readFile("../README.md", "utf8", (err, data) => {
-    console.log(data);
-    fs.writeFile("README.md", data, "utf8", (err) => {});
-});
-
 // Renaming the folders and using context managers to ensure they finished
 fs.rename("packages/playwright-core", "packages/patchright-core", (err) => {
     fs.rename("packages/playwright", "packages/patchright", (err) => {
+        // Write the Projects README to the README which is used in the release
+        fs.readFile("../README.md", "utf8", (err, data) => {
+            fs.writeFileSync("/packages/patchright/README.md", data, "utf8", (err) => {});
+        });
+        fs.writeFileSync("/packages/patchright-core/README.md", "# patchright-core\n\nThis package contains the no-browser flavor of [Patchright-NodeJS](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs).", "utf8", (err) => {});
+
         // Package.Json Files
         // playwright-core/package.json
         fs.readFile("packages/patchright-core/package.json", "utf8", (err, data) => {

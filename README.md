@@ -35,10 +35,8 @@
 ## Install it from NPM
 
 ```bash
-# Run from your project's root directory
-npm init patchright@latest
-# Or create a new project
-npm init patchright@latest new-project
+# Install Patchright from NPM
+npm i patchright
 ```
 
 ```bash
