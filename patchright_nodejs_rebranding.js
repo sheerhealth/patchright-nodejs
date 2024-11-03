@@ -109,8 +109,8 @@ fs.rename("packages/playwright-core", "packages/patchright-core", (err) => {
           const packageJson = JSON.parse(data);
           packageJson.name = "patchright-core";
           packageJson.author["name"] = "Microsoft Corportation, patched by github.com/Kaliiiiiiiiii-Vinyzu/";
-          packageJson.homepage = "https://github.com/Kaliiiiiiiiii-Vinyzu/Patchright"
-          packageJson.repository["url"] = "git+https://github.com/Kaliiiiiiiiii-Vinyzu/Patchright.git"
+          packageJson.homepage = "https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs"
+          packageJson.repository["url"] = "https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs"
           packageJson.bin = {
             "patchright-core": "cli.js"
           }
@@ -129,8 +129,8 @@ fs.rename("packages/playwright-core", "packages/patchright-core", (err) => {
           const packageJson = JSON.parse(data);
           packageJson.name = "patchright";
           packageJson.author["name"] = "Microsoft Corportation, patched by github.com/Kaliiiiiiiiii-Vinyzu/";
-          packageJson.homepage = "https://github.com/Kaliiiiiiiiii-Vinyzu/Patchright"
-          packageJson.repository["url"] = "git+https://github.com/Kaliiiiiiiiii-Vinyzu/Patchright.git"
+          packageJson.homepage = "https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs"
+          packageJson.repository["url"] = "https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs"
           packageJson.bin = {
             "patchright": "cli.js"
           }
