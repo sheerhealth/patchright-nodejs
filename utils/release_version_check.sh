@@ -36,8 +36,8 @@ version_is_behind() {
   fi
 }
 
-# Get the latest release version of microsoft/playwright-python
-playwright_version=$(get_latest_release "microsoft/playwright-python")
+# Get the latest release version of microsoft/playwright
+playwright_version=$(get_latest_release "microsoft/playwright")
 echo "Latest release of the Playwright-Python: $playwright_version"
 
 # Get the latest release version of Patchright
