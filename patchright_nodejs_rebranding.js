@@ -99,9 +99,9 @@ fs.rename("packages/playwright-core", "packages/patchright-core", (err) => {
     fs.rename("packages/playwright", "packages/patchright", (err) => {
         // Write the Projects README to the README which is used in the release
         fs.readFile("../README.md", "utf8", (err, data) => {
-            fs.writeFileSync("/packages/patchright/README.md", data, "utf8", (err) => {});
+            fs.writeFileSync("packages/patchright/README.md", data, "utf8", (err) => {});
         });
-        fs.writeFileSync("/packages/patchright-core/README.md", "# patchright-core\n\nThis package contains the no-browser flavor of [Patchright-NodeJS](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs).", "utf8", (err) => {});
+        fs.writeFileSync("packages/patchright-core/README.md", "# patchright-core\n\nThis package contains the no-browser flavor of [Patchright-NodeJS](https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs).", "utf8", (err) => {});
 
         // Package.Json Files
         // playwright-core/package.json
@@ -155,6 +155,6 @@ fs.rename("packages/playwright-core", "packages/patchright-core", (err) => {
         });
 
         // Usage example: pass the directory path as an argument
-        renameImportsAndExportsInDirectory("./packages/patchright");
+        renameImportsAndExportsInDirectory("packages/patchright");
     })
 })
