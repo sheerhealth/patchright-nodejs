@@ -156,6 +156,26 @@ fs.rename("packages/playwright-core", "packages/patchright-core", (err) => {
             fs.writeFile("packages/patchright/lib/transform/esmUtils.js", updatedContent, 'utf8', (err) => {});
         });
 
+        // Read the content of node_modules/patchright/lib/transform/babelBundleImpl.js
+        fs.readFile("node_modules/patchright/lib/transform/babelBundleImpl.js", "utf8", (err, data) => {
+            if (err) {
+                console.error("Error reading file:", err);
+                return;
+            }
+
+            // Replace the incorrect mention of 'playwright' with 'patchright'
+            const updatedContent = data.replace(/playwright/g, "patchright");
+
+            // Save the updated content back to the file
+            fs.writeFile("node_modules/patchright/lib/transform/babelBundleImpl.js", updatedContent, "utf8", (err) => {
+                if (err) {
+                    console.error("Error writing file:", err);
+                } else {
+                    console.log("File updated successfully.");
+                }
+            });
+        });
+
         // Usage example: pass the directory path as an argument
         renameImportsAndExportsInDirectory("packages/patchright");
     })
