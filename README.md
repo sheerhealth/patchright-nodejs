@@ -17,7 +17,7 @@
         <img alt="Patchright Version" src="https://img.shields.io/github/v/release/microsoft/playwright?display_name=release&label=Version">
     </a>
     <a href="https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs/releases">
-        <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/Kaliiiiiiiiii-Vinyzu/patchright-nodejs/total">
+        <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/npm/d18m/patchright?color=red">
     </a>
     <a href="https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs">
         <img src="https://img.shields.io/badge/Package-NodeJS-seagreen">
