@@ -79,11 +79,16 @@ function renameImportsAndExportsInDirectory(directoryPath) {
         // Modify any 'playwright-core' require or require.resolve
         requireCalls.forEach(call => {
             const args = call.getArguments();
-            if (args.length && args[0].getText().includes("playwright-core")) {
+            if (args.length && (args[0].getText().includes("playwright-core"))) {
                 const arg = args[0];
                 arg.replaceWithText(arg.getText().replace(/playwright-core/g, "patchright-core"));
                 modified = true;
-        }});
+            } else if (args.length && (args[0].getText().includes("playwright"))) {
+                const arg = args[0];
+                arg.replaceWithText(arg.getText().replace(/playwright/g, "patchright"));
+                modified = true;
+            }
+        });
 
         // Save if any modification was made
         if (modified) {
