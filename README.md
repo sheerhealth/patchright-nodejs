@@ -65,7 +65,7 @@ const { chromium } = require('patchright');
 })();
 ```
 
-### Best Practices
+### Best Practice  - use Chrome without Fingerprint Injection
 
 To be completely undetected, use the following configuration:
 ```js
@@ -73,8 +73,14 @@ chromium.launchPersistentContext("...", {
     channel: "chrome",
     headless: false,
     viewport: null,
+    // do NOT add custom browser headers or userAgent
 });
 ```
+
+> [!NOTE]  
+> We recommend using Google Chrome instead of Chromium.
+> You can install it via `npx patchright install chrome` (or via any other installation method) and use it with `channel: "chrome"`.
+
 
 ---
 
