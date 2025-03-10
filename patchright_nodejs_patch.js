@@ -15,7 +15,7 @@ const clientHelperSourceFile = project.addSourceFileAtPath(
 );
 // ------- addSourceUrlToScript Function -------
 const addSourceUrlToScriptFunction = clientHelperSourceFile.getFunction("addSourceUrlToScript");
-addSourceUrlToScriptFunction.setBodyText(`return script`);
+addSourceUrlToScriptFunction.setBodyText(`return source`);
 
 // ----------------------------
 // client/browserContext.ts
