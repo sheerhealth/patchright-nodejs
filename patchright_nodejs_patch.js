@@ -53,7 +53,9 @@ if (this.routeInjecting) return;
 await this.route('**/*', async route => {
   if (route.request().resourceType() === 'document' && route.request().url().startsWith('http')) {
     try {
-      const response = await route.fetch({ maxRedirects: 0 });
+      const response = await route.fetch({ 
+        // maxRedirects: 0 
+      });
       await route.fulfill({ response: response });
     } catch (e) {
       await route.continue();
@@ -101,7 +103,9 @@ if (this.routeInjecting || this.context().routeInjecting) return;
 await this.route('**/*', async route => {
   if (route.request().resourceType() === 'document' && route.request().url().startsWith('http')) {
     try {
-      const response = await route.fetch({ maxRedirects: 0 });
+      const response = await route.fetch({ 
+        // maxRedirects: 0 
+      });
       await route.fulfill({ response: response });
     } catch (e) {
       await route.continue();
