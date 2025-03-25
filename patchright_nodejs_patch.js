@@ -1,10 +1,13 @@
+import fs from "node:fs/promises";
 import { Project, SyntaxKind, IndentationText } from "ts-morph";
+import YAML from "yaml";
 
 const project = new Project({
   manipulationSettings: {
     indentationText: IndentationText.TwoSpaces,
   },
 });
+
 
 
 // ----------------------------
@@ -48,8 +51,7 @@ clientBrowserContextClass.addMethod({
   isAsync: true,
 });
 const clientBrowserContextInstallInjectRouteMethod = clientBrowserContextClass.getMethod("installInjectRoute");
-clientBrowserContextInstallInjectRouteMethod.setBodyText(`
-  if (this.routeInjecting || this.context().routeInjecting) return;
+clientBrowserContextInstallInjectRouteMethod.setBodyText(`if (this.routeInjecting || this.context().routeInjecting) return;
   await this.route('**/*', async route => {
     try {
       if (route.request().resourceType() === 'document' && route.request().url().startsWith('http')) {
@@ -60,7 +62,8 @@ clientBrowserContextInstallInjectRouteMethod.setBodyText(`
       }
   } catch (error) {
       await route.continue();
-  }`);
+  }
+});`);
 
 // ----------------------------
 // client/page.ts
@@ -93,8 +96,7 @@ clientPageClass.addMethod({
   isAsync: true,
 });
 const clientPageInstallInjectRouteMethod = clientPageClass.getMethod("installInjectRoute");
-clientPageInstallInjectRouteMethod.setBodyText(`
-if (this.routeInjecting || this.context().routeInjecting) return;
+clientPageInstallInjectRouteMethod.setBodyText(`if (this.routeInjecting || this.context().routeInjecting) return;
 await this.route('**/*', async route => {
   try {
     if (route.request().resourceType() === 'document' && route.request().url().startsWith('http')) {
@@ -105,7 +107,8 @@ await this.route('**/*', async route => {
     }
 } catch (error) {
     await route.continue();
-}`);
+  }
+});`);
 
 // -- evaluate Method --
 const clientPageEvaluateMethod = clientPageClass.getMethod("evaluate");
