@@ -72,6 +72,14 @@ jobs:
           cd playwright
           node "../patchright_nodejs_patch.js"
 
+      - name: Generate Playwright Channels
+        if: steps.version_check.outputs.proceed == 'true'
+        # Ignore the error exit code, as the script exits 1 when a file is modified.
+        continue-on-error: true
+        run: |
+          cd playwright
+          node utils/generate_channels.js
+
       - name: Build Playwright-NodeJS Package
         if: steps.version_check.outputs.proceed == 'true'
         run: |
