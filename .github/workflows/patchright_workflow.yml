@@ -68,7 +68,7 @@ jobs:
       - name: Patch Playwright-NodeJS Package
         if: steps.version_check.outputs.proceed == 'true'
         run: |
-          curl -s "https://raw.githubusercontent.com/Kaliiiiiiiiii-Vinyzu/patchright/refs/heads/main/patchright_driver_patch.js" | tail -n +10 >> patchright_nodejs_patch.js
+          curl -s "https://raw.githubusercontent.com/Kaliiiiiiiiii-Vinyzu/patchright/96440d58e4d51fd1f0b4f7a7e4f13c51ebbbfd6d/patchright_driver_patch.js" | tail -n +10 >> patchright_nodejs_patch.js
           cd playwright
           node "../patchright_nodejs_patch.js"
 
