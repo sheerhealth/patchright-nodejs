@@ -51,7 +51,7 @@ clientBrowserContextClass.addMethod({
   isAsync: true,
 });
 const clientBrowserContextInstallInjectRouteMethod = clientBrowserContextClass.getMethod("installInjectRoute");
-clientBrowserContextInstallInjectRouteMethod.setBodyText(`if (this.routeInjecting || this.context().routeInjecting) return;
+clientBrowserContextInstallInjectRouteMethod.setBodyText(`if (this.routeInjecting) return;
   await this.route('**/*', async route => {
     try {
       if (route.request().resourceType() === 'document' && route.request().url().startsWith('http')) {
