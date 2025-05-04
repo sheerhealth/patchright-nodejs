@@ -352,11 +352,7 @@ locatorEvaluateHandleMethod.addParameter({
   type: "boolean",
   initializer: "true",
 });
-locatorEvaluateHandleMethod.setBodyText(`return await this._withElement(h => 
-  parseResult(
-    (await h._channel.evaluateExpression({ expression: String(pageFunction), isFunction: typeof pageFunction === 'function', arg: serializeArgument(arg), isolatedContext: isolatedContext }); options?.timeout)).value
-  )
-)`).setBodyText(`return await this._withElement(
+locatorEvaluateHandleMethod.setBodyText(`return await this._withElement(
   async (h) =>
     JSHandle.from(
       (
@@ -370,6 +366,106 @@ locatorEvaluateHandleMethod.setBodyText(`return await this._withElement(h =>
     ) as any as structs.SmartHandle<R>,
   options?.timeout
 );`)
+
+// ----------------------------
+// client/jsHandle.ts
+// ----------------------------
+const jsHandleSourceFile = project.addSourceFileAtPath(
+  "packages/playwright-core/src/client/jsHandle.ts",
+);
+// ------- JSHandle Class -------
+const clientJSHandleClass = jsHandleSourceFile.getClass("JSHandle");
+// -- evaluate Method --
+const jsHandleEvaluateMethod = clientJSHandleClass.getMethod("evaluate");
+jsHandleEvaluateMethod.addParameter({
+  name: "isolatedContext",
+  type: "boolean",
+  initializer: "true",
+});
+jsHandleEvaluateMethod.setBodyText(`const result = await this._channel.evaluateExpression({ expression: String(pageFunction), isFunction: typeof pageFunction === 'function', arg: serializeArgument(arg), isolatedContext: isolatedContext });
+    return parseResult(result.value);`)
+
+// -- evaluateHandle Method --
+const jsHandleEvaluateHandleMethod = clientJSHandleClass.getMethod("evaluateHandle");
+jsHandleEvaluateHandleMethod.addParameter({
+  name: "isolatedContext",
+  type: "boolean",
+  initializer: "true",
+});
+jsHandleEvaluateHandleMethod.setBodyText(`const result = await this._channel.evaluateExpressionHandle({ expression: String(pageFunction), isFunction: typeof pageFunction === 'function', arg: serializeArgument(arg), isolatedContext: isolatedContext });
+    return JSHandle.from(result.handle) as any as structs.SmartHandle<R>;`)
+
+// ----------------------------
+// types/types.d.ts
+// ----------------------------
+const typesSourceFile = project.addSourceFileAtPath(
+  "packages/playwright-core/types/types.d.ts",
+);
+// ------- PageType Interface -------
+const pageInterface = typesSourceFile.getInterface("Page");
+const pageEvaluateSignatures = pageInterface.getMembers()
+  .filter(m => m.getKind() === SyntaxKind.MethodSignature && (m.getName() === "evaluate" || m.getName() === "evaluateHandle"));
+
+pageEvaluateSignatures.forEach(method => {
+  const methodSig = method.asKindOrThrow(SyntaxKind.MethodSignature);
+  methodSig.addParameter({
+    name: "isolatedContext",
+    type: "boolean",
+    hasQuestionToken: true,
+  });
+});
+// ------- WorkerType Interface -------
+const workerInterface = typesSourceFile.getInterface("Worker");
+const workerEvaluateSignatures = workerInterface.getMembers()
+  .filter(m => m.getKind() === SyntaxKind.MethodSignature && (m.getName() === "evaluate" || m.getName() === "evaluateHandle"));
+
+workerEvaluateSignatures.forEach(method => {
+  const methodSig = method.asKindOrThrow(SyntaxKind.MethodSignature);
+  methodSig.addParameter({
+    name: "isolatedContext",
+    type: "boolean",
+    hasQuestionToken: true,
+  });
+});
+// ------- FrameType Interface -------
+const frameInterface = typesSourceFile.getInterface("Frame");
+const frameEvaluateSignatures = frameInterface.getMembers()
+  .filter(m => m.getKind() === SyntaxKind.MethodSignature && (m.getName() === "evaluate" || m.getName() === "evaluateHandle"));
+
+frameEvaluateSignatures.forEach(method => {
+  const methodSig = method.asKindOrThrow(SyntaxKind.MethodSignature);
+  methodSig.addParameter({
+    name: "isolatedContext",
+    type: "boolean",
+    hasQuestionToken: true,
+  });
+});
+// ------- LocatorType Interface -------
+const locatorInterface = typesSourceFile.getInterface("Locator");
+const locatorEvaluateSignatures = locatorInterface.getMembers()
+  .filter(m => m.getKind() === SyntaxKind.MethodSignature && (m.getName() === "evaluate" || m.getName() === "evaluateHandle"));
+
+locatorEvaluateSignatures.forEach(method => {
+  const methodSig = method.asKindOrThrow(SyntaxKind.MethodSignature);
+  methodSig.addParameter({
+    name: "isolatedContext",
+    type: "boolean",
+    hasQuestionToken: true,
+  });
+});
+// ------- JSHandleType Interface -------
+const jsHandleInterface = typesSourceFile.getInterface("JSHandle");
+const jsHandleEvaluateSignatures = jsHandleInterface.getMembers()
+  .filter(m => m.getKind() === SyntaxKind.MethodSignature && (m.getName() === "evaluate" || m.getName() === "evaluateHandle"));
+
+jsHandleEvaluateSignatures.forEach(method => {
+  const methodSig = method.asKindOrThrow(SyntaxKind.MethodSignature);
+  methodSig.addParameter({
+    name: "isolatedContext",
+    type: "boolean",
+    hasQuestionToken: true,
+  });
+});
 
 // Here the Driver Patch will be added by fetching the code from the main Driver Repository (in the workflow).
 // The URL from which the code is added is: https://raw.githubusercontent.com/Kaliiiiiiiiii-Vinyzu/patchright/refs/heads/main/patchright_driver_patch.js

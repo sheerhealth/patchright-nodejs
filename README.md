@@ -136,7 +136,7 @@ Patchright passes:
 See the original [Playwright Documentation](https://playwright.dev/docs/intro) and [API Reference](https://playwright.dev/docs/api/class-playwright)
 
 ## Extended Patchright API
-#### **`evaluate`** Method <sub>([`Frame.evaluate`](https://playwright.dev/docs/api/class-frame#frame-evaluate), [`Page.evaluate`](https://playwright.dev/docs/api/class-page#page-evaluate),  [`Locator.evaluate`](https://playwright.dev/docs/api/class-locator#locator-evaluate),  [`Worker.evaluate`](https://playwright.dev/docs/api/class-worker#worker-evaluate))</sub>
+#### **`evaluate`** Method <sub>([`Frame.evaluate`](https://playwright.dev/docs/api/class-frame#frame-evaluate), [`Page.evaluate`](https://playwright.dev/docs/api/class-page#page-evaluate),  [`Locator.evaluate`](https://playwright.dev/docs/api/class-locator#locator-evaluate),  [`Worker.evaluate`](https://playwright.dev/docs/api/class-worker#worker-evaluate),  [`JSHandle.evaluate`](https://playwright.dev/docs/api/class-jshandle#js-handle-evaluate))</sub>
 - Added `isolatedContext`  to choose Execution Context (Main/Isolated). `Bool` (*optional*, Defaults to `true`)
 ```diff
 object.evaluate(
@@ -147,7 +147,7 @@ object.evaluate(
 )
 ```
 
-#### **`evaluateHandle`** Method <sub>([`Frame.evaluateHandle`](https://playwright.dev/docs/api/class-frame#frame-evaluate-handle), [`Page.evaluateHandle`](https://playwright.dev/docs/api/class-page#page-evaluate-handle), [`Locator.evaluateHandle`](https://playwright.dev/docs/api/class-locator#locator-evaluate-handle), [`Worker.evaluateHandle`](https://playwright.dev/docs/api/class-worker#worker-evaluate-handle))</sub>
+#### **`evaluateHandle`** Method <sub>([`Frame.evaluateHandle`](https://playwright.dev/docs/api/class-frame#frame-evaluate-handle), [`Page.evaluateHandle`](https://playwright.dev/docs/api/class-page#page-evaluate-handle), [`Locator.evaluateHandle`](https://playwright.dev/docs/api/class-locator#locator-evaluate-handle), [`Worker.evaluateHandle`](https://playwright.dev/docs/api/class-worker#worker-evaluate-handle), [`JSHandle.evaluateHandle`](https://playwright.dev/docs/api/class-jshandle#js-handle-evaluate-handle))</sub>
 - Added `isolatedContext`  to choose Execution Context (Main/Isolated). `Bool` (*optional*, Defaults to `true`)
 ```diff
 object.evaluateHandle(
