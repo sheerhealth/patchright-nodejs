@@ -375,21 +375,35 @@ locatorEvaluateMethod.setBodyText(`return await this._withElement(
     );`)
 
 // -- evaluateHandle Method --
-const locatorEvaluateAllMethod = locatorClass.getMethod("evaluateAll");
-locatorEvaluateAllMethod.addParameter({
-  name: "isolatedContext",
-  type: "boolean",
-  initializer: "true",
-});
-locatorEvaluateHandleMethod.setBodyText(`return await this._frame.$$eval(this._selector, pageFunction, arg, isolatedContext);`)
-
-// -- evaluateHandle Method --
 const locatorEvaluateHandleMethod = locatorClass.getMethod("evaluateHandle");
 locatorEvaluateHandleMethod.addParameter({
   name: "isolatedContext",
   type: "boolean",
   initializer: "true",
 });
+locatorEvaluateHandleMethod.setBodyText(`return await this._withElement(
+  async (h) =>Add commentMore actions
+    JSHandle.from(
+      (
+        await h._channel.evaluateExpressionHandle({
+          expression: String(pageFunction),
+          isFunction: typeof pageFunction === "function",
+          arg: serializeArgument(arg),
+          isolatedContext: isolatedContext,
+        })
+      ).handle
+    ) as any as structs.SmartHandle<R>,
+  options?.timeout
+);`)
+
+// -- evaluateAll Method --
+const locatorEvaluateAllMethod = locatorClass.getMethod("evaluateAll");
+locatorEvaluateAllMethod.addParameter({
+  name: "isolatedContext",
+  type: "boolean",
+  initializer: "true",
+});
+locatorEvaluateAllMethod.setBodyText(`return await this._frame.$$eval(this._selector, pageFunction, arg, isolatedContext);`)
 
 // ----------------------------
 // client/jsHandle.ts
