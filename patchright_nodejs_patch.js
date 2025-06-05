@@ -382,7 +382,7 @@ locatorEvaluateHandleMethod.addParameter({
   initializer: "true",
 });
 locatorEvaluateHandleMethod.setBodyText(`return await this._withElement(
-  async (h) =>Add commentMore actions
+  async (h) =>
     JSHandle.from(
       (
         await h._channel.evaluateExpressionHandle({
