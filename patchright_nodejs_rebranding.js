@@ -1,6 +1,90 @@
-import { Project, SyntaxKind } from "ts-morph"; // Import SyntaxKind from ts-morph
+import { Project, SyntaxKind, IndentationText } from "ts-morph"; // Import SyntaxKind from ts-morph
 import * as fs from "fs";
 import * as path from "path";
+
+
+// Fix Typing Declarations
+const project = new Project({
+  manipulationSettings: {
+    indentationText: IndentationText.TwoSpaces,
+  },
+});
+
+// ----------------------------
+// types/types.d.ts
+// ----------------------------
+const typesSourceFile = project.addSourceFileAtPath(
+  "packages/playwright-core/types/types.d.ts",
+);
+// ------- PageType Interface -------
+const pageInterface = typesSourceFile.getInterface("Page");
+const pageEvaluateSignatures = pageInterface.getMembers()
+  .filter(m => m.getKind() === SyntaxKind.MethodSignature && (m.getName() === "evaluate" || m.getName() === "evaluateHandle"));
+
+pageEvaluateSignatures.forEach(method => {
+  const methodSig = method.asKindOrThrow(SyntaxKind.MethodSignature);
+  methodSig.addParameter({
+    name: "isolatedContext",
+    type: "boolean",
+    hasQuestionToken: true,
+  });
+});
+// ------- WorkerType Interface -------
+const workerInterface = typesSourceFile.getInterface("Worker");
+const workerEvaluateSignatures = workerInterface.getMembers()
+  .filter(m => m.getKind() === SyntaxKind.MethodSignature && (m.getName() === "evaluate" || m.getName() === "evaluateHandle"));
+
+workerEvaluateSignatures.forEach(method => {
+  const methodSig = method.asKindOrThrow(SyntaxKind.MethodSignature);
+  methodSig.addParameter({
+    name: "isolatedContext",
+    type: "boolean",
+    hasQuestionToken: true,
+  });
+});
+// ------- FrameType Interface -------
+const frameInterface = typesSourceFile.getInterface("Frame");
+const frameEvaluateSignatures = frameInterface.getMembers()
+  .filter(m => m.getKind() === SyntaxKind.MethodSignature && (m.getName() === "evaluate" || m.getName() === "evaluateHandle"));
+
+frameEvaluateSignatures.forEach(method => {
+  const methodSig = method.asKindOrThrow(SyntaxKind.MethodSignature);
+  methodSig.addParameter({
+    name: "isolatedContext",
+    type: "boolean",
+    hasQuestionToken: true,
+  });
+});
+// ------- LocatorType Interface -------
+const locatorInterface = typesSourceFile.getInterface("Locator");
+const locatorEvaluateSignatures = locatorInterface.getMembers()
+  .filter(m => m.getKind() === SyntaxKind.MethodSignature && (m.getName() === "evaluate" || m.getName() === "evaluateHandle"));
+
+locatorEvaluateSignatures.forEach(method => {
+  const methodSig = method.asKindOrThrow(SyntaxKind.MethodSignature);
+  methodSig.addParameter({
+    name: "isolatedContext",
+    type: "boolean",
+    hasQuestionToken: true,
+  });
+});
+// ------- JSHandleType Interface -------
+const jsHandleInterface = typesSourceFile.getInterface("JSHandle");
+const jsHandleEvaluateSignatures = jsHandleInterface.getMembers()
+  .filter(m => m.getKind() === SyntaxKind.MethodSignature && (m.getName() === "evaluate" || m.getName() === "evaluateHandle"));
+
+jsHandleEvaluateSignatures.forEach(method => {
+  const methodSig = method.asKindOrThrow(SyntaxKind.MethodSignature);
+  methodSig.addParameter({
+    name: "isolatedContext",
+    type: "boolean",
+    hasQuestionToken: true,
+  });
+});
+
+// Save the changes without reformatting
+project.saveSync();
+
 
 // Function to recursively find all TypeScript and JavaScript files
 function getAllJsTsFiles(dir){
@@ -113,7 +197,7 @@ fs.rename("packages/playwright-core", "packages/patchright-core", (err) => {
         fs.readFile("packages/patchright-core/package.json", "utf8", (err, data) => {
           const packageJson = JSON.parse(data);
           packageJson.name = "patchright-core";
-          // packageJson.version = "1.52.4"
+          packageJson.version = "1.52.5"
           packageJson.author["name"] = "Microsoft Corportation, patched by github.com/Kaliiiiiiiiii-Vinyzu/";
           packageJson.homepage = "https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs"
           packageJson.repository["url"] = "https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs"
@@ -134,7 +218,7 @@ fs.rename("packages/playwright-core", "packages/patchright-core", (err) => {
         fs.readFile("packages/patchright/package.json", "utf8", (err, data) => {
           const packageJson = JSON.parse(data);
           packageJson.name = "patchright";
-          // packageJson.version = "1.52.4"
+          packageJson.version = "1.52.5"
           packageJson.author["name"] = "Microsoft Corportation, patched by github.com/Kaliiiiiiiiii-Vinyzu/";
           packageJson.homepage = "https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs"
           packageJson.repository["url"] = "https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs"
