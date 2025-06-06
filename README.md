@@ -13,14 +13,18 @@
     <a>
         <img src="https://img.shields.io/badge/Driver-Patched-blue">
     </a>
+    <a href="https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-python/actions/workflows/patchright_tests.yml">
+        <img src="https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-python/actions/workflows/patchright_tests.yml/badge.svg">
+    </a>
+    <br/>
     <a href="https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs/releases/latest">
         <img alt="Patchright Version" src="https://img.shields.io/github/v/release/microsoft/playwright?display_name=release&label=Version">
     </a>
-    <a href="https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs/releases">
-        <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/npm/d18m/patchright?color=red">
-    </a>
     <a href="https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs">
         <img src="https://img.shields.io/badge/Package-NodeJS-seagreen">
+    </a>
+    <a href="https://github.com/Kaliiiiiiiiii-Vinyzu/patchright-nodejs/releases">
+        <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/npm/d18m/patchright?color=red">
     </a>
 </p>
 
@@ -151,6 +155,17 @@ object.evaluate(
 - Added `isolatedContext`  to choose Execution Context (Main/Isolated). `Bool` (*optional*, Defaults to `true`)
 ```diff
 object.evaluateHandle(
+    pageFunction: Function | string,
+    arg?: Arg,
+    ...,
++   isolatedContext: boolean = true
+)
+```
+
+#### **`evaluateAll`** Method <sub>([`Locator.evaluateAll`](https://playwright.dev/docs/api/class-locator#locator-evaluate-all))</sub>
+- Added `isolated_context`  to choose Execution Context (Main/Isolated). `Bool` (*optional*, Defaults to `True`)
+```diff
+Locator.evaluateAll(
     pageFunction: Function | string,
     arg?: Arg,
     ...,
