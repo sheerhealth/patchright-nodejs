@@ -102,16 +102,17 @@ jobs:
           cd playwright
           node "../patchright_nodejs_rebranding.js"
 
-      - name: Copy .npmrc to playwright directory
+      - name: Copy .npmrc to package directories
         if: steps.version_check.outputs.proceed == 'true'
         run: |
-          cp .npmrc playwright/.npmrc
+          # cp .npmrc playwright/packages/patchright-core/.npmrc
+          cp .npmrc playwright/packages/patchright/.npmrc
 
-      - name: Publish Patchright-Core Package
-        if: steps.version_check.outputs.proceed == 'true'
-        run: |
-          cd playwright/packages/patchright-core/
-          npm publish --access=public
+      # - name: Publish Patchright-Core Package
+      #   if: steps.version_check.outputs.proceed == 'true'
+      #   run: |
+      #     cd playwright/packages/patchright-core/
+      #     npm publish --access=public
 
       - name: Publish Patchright Package
         if: steps.version_check.outputs.proceed == 'true'
