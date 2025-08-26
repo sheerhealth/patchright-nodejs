@@ -102,18 +102,6 @@ jobs:
           cd playwright
           node "../patchright_nodejs_rebranding.js"
 
-      - name: Create Empty Versioning Release
-        if: steps.version_check.outputs.proceed == 'true'
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ env.playwright_version }}
-          release_name: ${{ env.playwright_version }}
-          body: |
-            This is an automatic deployment in response to a new release of [microsoft/playwright](https://github.com/microsoft/playwright).
-            This Release is only used for Versioning.
-          draft: false
-          prerelease: false
-
       - name: Publish Patchright-Core Package
         if: steps.version_check.outputs.proceed == 'true'
         run: |
