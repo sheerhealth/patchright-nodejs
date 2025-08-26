@@ -111,12 +111,6 @@ jobs:
           rm -f playwright/.npmrc
           rm -f playwright/packages/.npmrc
 
-      # - name: Publish Patchright-Core Package
-      #   if: steps.version_check.outputs.proceed == 'true'
-      #   run: |
-      #     cd playwright/packages/patchright-core/
-      #     npm publish --access=public
-
       - name: Publish Patchright Package
         if: steps.version_check.outputs.proceed == 'true'
         run: |
