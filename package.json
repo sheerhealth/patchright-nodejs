@@ -15,7 +15,7 @@
   "scripts": {
     "prepare": "true"
   },
-  "dependencies": {
+  "devDependencies": {
     "ts-morph": "^23.0.0",
     "yaml": "^2.7.0"
   }
