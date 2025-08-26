@@ -1,5 +1,6 @@
 {
   "name": "@sheer/patchright",
+  "description": "SheerHealth Patchright Node.js Patch",
   "version": "0.1.0",
   "private": false,
   "main": "patchright_nodejs_patch.js",
