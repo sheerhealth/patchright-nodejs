@@ -107,6 +107,9 @@ jobs:
         run: |
           # cp .npmrc playwright/packages/patchright-core/.npmrc
           cp .npmrc playwright/packages/patchright/.npmrc
+          # Remove any existing .npmrc files that might interfere
+          rm -f playwright/.npmrc
+          rm -f playwright/packages/.npmrc
 
       # - name: Publish Patchright-Core Package
       #   if: steps.version_check.outputs.proceed == 'true'
