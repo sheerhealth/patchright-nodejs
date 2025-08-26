@@ -11,7 +11,6 @@ on:
   schedule:
     - cron: '48 * * * *'
 
-
 permissions:
   actions: none
   attestations: none
@@ -28,22 +27,33 @@ permissions:
   security-events: none
   statuses: none
 
-
 env:
   REPO: ${{ github.repository }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   patchright-workflow:
-    name: "Patchright-NodeJS Workflow: Install, Patch, Build and Publish Patchright Driver"
+    name: 'Patchright-NodeJS Workflow: Install, Patch, Build and Publish Patchright Driver'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+
+      - name: Google Auth
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
       - name: Setup Node v18
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: 'https://us-central1-npm.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/'
+
+      - name: Configure npm for GCP Artifact Registry
+        run: |
+          echo "//us-central1-npm.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/:_authToken=${{ steps.auth.outputs.access_token }}" > .npmrc
+
       - name: Install TS-Morph
         run: npm install
 
@@ -108,14 +118,15 @@ jobs:
         if: steps.version_check.outputs.proceed == 'true'
         run: |
           cd playwright/packages/patchright-core/
-          npm publish --access=public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          npm publish --access=public
 
       - name: Publish Patchright Package
         if: steps.version_check.outputs.proceed == 'true'
         run: |
           cd playwright/packages/patchright/
-          npm publish --access=public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          npm publish --access=public
+
+      - name: Cleanup
+        if: steps.version_check.outputs.proceed == 'true'
+        run: |
+          rm -f .npmrc

@@ -3,15 +3,19 @@
   "description": "SheerHealth Patchright Node.js Patch",
   "version": "0.1.1",
   "private": false,
+  "type": "module",
   "main": "patchright_nodejs_patch.js",
+  "bin": {
+    "sheer-patchright": "patchright_nodejs_patch.js"
+  },
   "files": [
     "patchright_nodejs_patch.js",
     "patchright_nodejs_rebranding.js"
   ],
   "scripts": {
-    "prepare": "echo 'No build step needed for JavaScript package'"
+    "prepare": "true"
   },
-  "devDependencies": {
+  "dependencies": {
     "ts-morph": "^23.0.0",
     "yaml": "^2.7.0"
   }
