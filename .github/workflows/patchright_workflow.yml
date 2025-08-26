@@ -48,11 +48,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          registry-url: 'https://us-central1-npm.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/'
 
       - name: Configure npm for GCP Artifact Registry
         run: |
-          echo "//us-central1-npm.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/:_authToken=${{ steps.auth.outputs.access_token }}" > .npmrc
+          echo "//us-central1-npm.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/:_authToken=${{ steps.auth.outputs.access_token }}" >> .npmrc
+          echo "@sheer:registry=https://us-central1-npm.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/" >> .npmrc
 
       - name: Install TS-Morph
         run: npm install
