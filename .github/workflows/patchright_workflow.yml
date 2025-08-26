@@ -51,7 +51,7 @@ jobs:
 
       - name: Configure npm for GCP Artifact Registry
         run: |
-          echo "//us-central1-npm.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/:_authToken=${{ steps.auth.outputs.access_token }}" >> .npmrc
+          echo "//us-central1-npm.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/:_authToken=${{ steps.auth.outputs.access_token }}" > .npmrc
           echo "@sheer:registry=https://us-central1-npm.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/" >> .npmrc
 
       - name: Install TS-Morph
@@ -102,11 +102,16 @@ jobs:
           cd playwright
           node "../patchright_nodejs_rebranding.js"
 
-      # - name: Publish Patchright-Core Package
-      #   if: steps.version_check.outputs.proceed == 'true'
-      #   run: |
-      #     cd playwright/packages/patchright-core/
-      #     npm publish --access=public
+      - name: Copy .npmrc to playwright directory
+        if: steps.version_check.outputs.proceed == 'true'
+        run: |
+          cp .npmrc playwright/.npmrc
+
+      - name: Publish Patchright-Core Package
+        if: steps.version_check.outputs.proceed == 'true'
+        run: |
+          cd playwright/packages/patchright-core/
+          npm publish --access=public
 
       - name: Publish Patchright Package
         if: steps.version_check.outputs.proceed == 'true'
