@@ -266,7 +266,9 @@ fs.rename('packages/playwright-core', 'packages/patchright-core', (err) => {
           'patchright-core': 'cli.js',
         };
         packageJson.publishConfig = {
-          registry: 'https://us-central1-npm.pkg.dev/sheer-health-scratch/',
+          registry: `https://us-central1-npm.pkg.dev/${
+            process.env.GCP_PROJECT_ID || 'sheer-health-scratch'
+          }/`,
         };
 
         const updatedJsonData = JSON.stringify(packageJson, null, 4);
@@ -302,7 +304,9 @@ fs.rename('packages/playwright-core', 'packages/patchright-core', (err) => {
         'patchright-core': packageJson.version,
       };
       packageJson.publishConfig = {
-        registry: 'https://us-central1-npm.pkg.dev/sheer-health-scratch/',
+        registry: `https://us-central1-npm.pkg.dev/${
+          process.env.GCP_PROJECT_ID || 'sheer-health-scratch'
+        }/`,
       };
 
       const updatedJsonData = JSON.stringify(packageJson, null, 4);

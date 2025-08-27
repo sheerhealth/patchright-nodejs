@@ -78,17 +78,8 @@ jobs:
       - name: Patch Playwright-NodeJS Package
         if: steps.version_check.outputs.proceed == 'true'
         run: |
-          curl -s "https://raw.githubusercontent.com/Kaliiiiiiiiii-Vinyzu/patchright/refs/heads/main/patchright_driver_patch.js" | tail -n +10 >> patchright_nodejs_patch.js
           cd playwright
           node "../patchright_nodejs_patch.js"
-
-      - name: Generate Playwright Channels
-        if: steps.version_check.outputs.proceed == 'true'
-        # Ignore the error exit code, as the script exits 1 when a file is modified.
-        continue-on-error: true
-        run: |
-          cd playwright
-          node utils/generate_channels.js
 
       - name: Build Playwright-NodeJS Package
         if: steps.version_check.outputs.proceed == 'true'
@@ -102,14 +93,29 @@ jobs:
           cd playwright
           node "../patchright_nodejs_rebranding.js"
 
-      - name: Copy .npmrc to package directories
+      - name: Configure .npmrc for GCP Artifact Registry
         if: steps.version_check.outputs.proceed == 'true'
         run: |
-          # cp .npmrc playwright/packages/patchright-core/.npmrc
-          cp .npmrc playwright/packages/patchright/.npmrc
+          # Authenticate with GCP using service account key
+          echo '${{ secrets.GCP_SA_KEY }}' > /tmp/gcp-key.json
+          gcloud auth activate-service-account --key-file=/tmp/gcp-key.json
+          gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+
+          # Get auth token for npm registry
+          AUTH_TOKEN=$(gcloud auth print-access-token)
+
+          # Create .npmrc with GCP Artifact Registry configuration
+          cat > playwright/packages/patchright/.npmrc << EOF
+          @patchright:registry=https://us-central1-npm.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/
+          //us-central1-npm.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/:_authToken=${AUTH_TOKEN}
+          EOF
+
           # Remove any existing .npmrc files that might interfere
           rm -f playwright/.npmrc
           rm -f playwright/packages/.npmrc
+
+          # Clean up the key file
+          rm -f /tmp/gcp-key.json
 
       - name: Publish Patchright Package
         if: steps.version_check.outputs.proceed == 'true'
